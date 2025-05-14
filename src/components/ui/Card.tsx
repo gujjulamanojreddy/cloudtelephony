@@ -8,7 +8,14 @@ interface CardProps {
 
 export const Card = ({ children, className }: CardProps) => {
   return (
-    <div className={cn('bg-white rounded-lg shadow-sm border border-gray-200', className)}>
+    <div className={cn(
+      'bg-white rounded-lg shadow-md border border-gray-200',
+      'transition-all duration-300 ease-in-out',
+      'hover:shadow-lg',
+      'transform hover:scale-[1.005]',
+      'bg-gradient-to-br from-white to-gray-50/50',
+      className
+    )}>
       {children}
     </div>
   );
@@ -34,7 +41,11 @@ interface CardTitleProps {
 
 export const CardTitle = ({ children, className }: CardTitleProps) => {
   return (
-    <h3 className={cn('text-lg font-medium text-gray-900', className)}>
+    <h3 className={cn(
+      'text-lg font-semibold text-gray-900',
+      'bg-clip-text bg-gradient-to-r from-gray-900 to-gray-700',
+      className
+    )}>
       {children}
     </h3>
   );

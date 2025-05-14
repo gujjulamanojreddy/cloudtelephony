@@ -6,6 +6,8 @@ import Dashboard from '../pages/Dashboard';
 import { Customers } from '../pages/Customers';
 import Products from '../pages/Products';
 import Orders from '../pages/Orders';
+import { PaidOrders } from '../pages/PaidOrders';
+import { UnpaidOrders } from '../pages/UnpaidOrders';
 import Reports from '../pages/Reports';
 import Settings from '../pages/Settings';
 import SocialMedia from '../pages/SocialMedia';
@@ -59,6 +61,24 @@ const AppLayout: React.FC = () => {
               <>
                 <Header title="Orders" subtitle="Manage orders" />
                 <Orders />
+              </>
+            } 
+          />
+          <Route 
+            path="/paid-orders" 
+            element={
+              <>
+                <Header title="Paid Orders" subtitle="View all paid orders" />
+                <PaidOrders />
+              </>
+            } 
+          />
+          <Route 
+            path="/unpaid-orders" 
+            element={
+              <>
+                <Header title="Unpaid Orders" subtitle="View pending and failed orders" />
+                <UnpaidOrders />
               </>
             } 
           />

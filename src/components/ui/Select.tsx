@@ -35,7 +35,12 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
           ref={ref}
           id={id}
           className={cn(
-            'bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pr-8 transition duration-150 ease-in-out',
+            'bg-white border border-gray-300 text-gray-900 text-sm rounded-lg',
+            'focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+            'block w-full p-2.5 pr-8 transition-all duration-200 ease-in-out',
+            'shadow-sm hover:shadow hover:border-gray-400',
+            'appearance-none bg-no-repeat',
+            'bg-[url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 20 20\'%3E%3Cpath stroke=\'%236B7280\' stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'1.5\' d=\'m6 8 4 4 4-4\'/%3E%3C/svg%3E")] bg-[center_right_0.5rem] bg-[length:1.5em_1.5em]',
             error && 'border-red-500 focus:ring-red-500 focus:border-red-500',
             className
           )}

@@ -29,17 +29,17 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const getVariantClasses = () => {
       switch (variant) {
         case 'primary':
-          return 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500';
+          return 'bg-gradient-to-r from-blue-600 to-blue-500 text-white hover:from-blue-700 hover:to-blue-600 focus:ring-blue-500';
         case 'secondary':
-          return 'bg-gray-100 text-gray-800 hover:bg-gray-200 focus:ring-gray-500';
+          return 'bg-gradient-to-r from-gray-200 to-gray-100 text-gray-800 hover:from-gray-300 hover:to-gray-200 focus:ring-gray-400';
         case 'danger':
-          return 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500';
+          return 'bg-gradient-to-r from-red-600 to-red-500 text-white hover:from-red-700 hover:to-red-600 focus:ring-red-500';
         case 'success':
-          return 'bg-green-600 text-white hover:bg-green-700 focus:ring-green-500';
+          return 'bg-gradient-to-r from-green-600 to-green-500 text-white hover:from-green-700 hover:to-green-600 focus:ring-green-500';
         case 'warning':
-          return 'bg-yellow-500 text-white hover:bg-yellow-600 focus:ring-yellow-500';
+          return 'bg-gradient-to-r from-yellow-500 to-amber-500 text-white hover:from-yellow-600 hover:to-amber-600 focus:ring-yellow-500';
         default:
-          return 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500';
+          return 'bg-gradient-to-r from-blue-600 to-blue-500 text-white hover:from-blue-700 hover:to-blue-600 focus:ring-blue-500';
       }
     };
 
@@ -58,15 +58,16 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         className={cn(
-          'inline-flex items-center justify-center font-medium rounded-md',
+          'inline-flex items-center justify-center font-medium rounded-lg',
           'transition-all duration-200 ease-in-out',
           'focus:outline-none focus:ring-2 focus:ring-offset-2',
-          'transform hover:scale-[1.02] active:scale-[0.98]',
+          'transform hover:scale-[1.02] active:scale-[0.98] hover:-translate-y-0.5',
+          'relative overflow-hidden',
           getVariantClasses(),
           getSizeClasses(),
           fullWidth && 'w-full',
           disabled || isLoading ? 'opacity-60 cursor-not-allowed' : '',
-          'shadow-sm hover:shadow',
+          'shadow-md hover:shadow-lg',
           className
         )}
         disabled={disabled || isLoading}

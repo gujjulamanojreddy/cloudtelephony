@@ -10,11 +10,12 @@ interface TableProps extends React.TableHTMLAttributes<HTMLTableElement> {
 export const Table = React.forwardRef<HTMLTableElement, TableProps>(
   ({ className, striped = true, hoverable = true, compact = false, ...props }, ref) => {
     return (
-      <div className="relative overflow-x-auto shadow-sm border border-gray-200 rounded-lg">
+      <div className="relative overflow-x-auto shadow-md border border-gray-200 rounded-lg bg-white transition-all duration-300 hover:shadow-lg">
         <table
           ref={ref}
           className={cn(
             'w-full text-sm text-left text-gray-700',
+            'enhanced-table',
             className
           )}
           {...props}
@@ -63,8 +64,9 @@ export const TableRow = React.forwardRef<HTMLTableRowElement, TableRowProps>(
       <tr
         ref={ref}
         className={cn(
-          striped && 'even:bg-gray-50',
-          hoverable && 'hover:bg-gray-100 transition-colors duration-150',
+          striped && 'even:bg-blue-50/30',
+          hoverable && 'hover:bg-blue-50/50 transition-colors duration-300',
+          'transform transition-transform hover:scale-[1.01]',
           className
         )}
         {...props}
@@ -82,7 +84,12 @@ export const TableHeader = React.forwardRef<HTMLTableCellElement, TableHeaderPro
     return (
       <th
         ref={ref}
-        className={cn('px-6 py-3 font-medium', className)}
+        className={cn(
+          'px-6 py-3 font-semibold text-xs tracking-wider uppercase',
+          'bg-gradient-to-r from-gray-100 to-gray-50',
+          'text-gray-700 border-b border-gray-200',
+          className
+        )}
         {...props}
       />
     );
@@ -100,7 +107,13 @@ export const TableCell = React.forwardRef<HTMLTableCellElement, TableCellProps>(
     return (
       <td
         ref={ref}
-        className={cn('px-6 py-4', compact && 'px-4 py-2', className)}
+        className={cn(
+          'px-6 py-4', 
+          compact && 'px-4 py-2', 
+          'transition-colors duration-200',
+          'border-b border-gray-100',
+          className
+        )}
         {...props}
       />
     );

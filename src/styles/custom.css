@@ -1,0 +1,270 @@
+/* Custom styles for enhanced UI */
+
+/* Modern card styling with subtle shadows and animations */
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  background: linear-gradient(to bottom right, #ffffff, #f9fafb);
+}
+
+.card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
+  transform: translateY(-2px);
+}
+
+/* Enhanced table styling */
+.enhanced-table {
+  border-spacing: 0;
+  width: 100%;
+  border-collapse: separate;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.enhanced-table th {
+  background: linear-gradient(to right, #f3f4f6, #f9fafb);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: #374151;
+  padding: 14px 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.enhanced-table td {
+  padding: 12px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  transition: background-color 0.2s ease;
+}
+
+.enhanced-table tr:hover td {
+  background-color: rgba(59, 130, 246, 0.05);
+}
+
+.enhanced-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Status badges with gradient backgrounds */
+.status-badge {
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.status-badge-success {
+  background: linear-gradient(to right, #10b981, #34d399);
+  color: white;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+}
+
+.status-badge-warning {
+  background: linear-gradient(to right, #f59e0b, #fbbf24);
+  color: white;
+  box-shadow: 0 2px 4px rgba(245, 158, 11, 0.2);
+}
+
+.status-badge-danger {
+  background: linear-gradient(to right, #ef4444, #f87171);
+  color: white;
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+}
+
+.status-badge-info {
+  background: linear-gradient(to right, #3b82f6, #60a5fa);
+  color: white;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+}
+
+.status-badge-neutral {
+  background: linear-gradient(to right, #6b7280, #9ca3af);
+  color: white;
+  box-shadow: 0 2px 4px rgba(107, 114, 128, 0.2);
+}
+
+/* Modern styled buttons with hover effects */
+.modern-button {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+  border: none;
+  cursor: pointer;
+}
+
+.modern-button:hover {
+  transform: translateY(-2px);
+}
+
+.modern-button:active {
+  transform: translateY(0);
+}
+
+.modern-button-primary {
+  background: linear-gradient(to right, #3b82f6, #60a5fa);
+  color: white;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+}
+
+.modern-button-primary:hover {
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4);
+}
+
+.modern-button-success {
+  background: linear-gradient(to right, #10b981, #34d399);
+  color: white;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+}
+
+.modern-button-success:hover {
+  box-shadow: 0 4px 8px rgba(16, 185, 129, 0.4);
+}
+
+.modern-button-danger {
+  background: linear-gradient(to right, #ef4444, #f87171);
+  color: white;
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+}
+
+.modern-button-danger:hover {
+  box-shadow: 0 4px 8px rgba(239, 68, 68, 0.4);
+}
+
+/* Custom inputs with focus animations */
+.custom-input {
+  border-radius: 8px;
+  padding: 0.625rem 1rem;
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s ease;
+  background-color: white;
+  width: 100%;
+}
+
+.custom-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  outline: none;
+}
+
+/* Dashboard stat cards with gradients */
+.stat-card {
+  border-radius: 12px;
+  padding: 1.5rem;
+  overflow: hidden;
+  position: relative;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.stat-card-blue {
+  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+  color: white;
+}
+
+.stat-card-green {
+  background: linear-gradient(135deg, #10b981, #34d399);
+  color: white;
+}
+
+.stat-card-purple {
+  background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+  color: white;
+}
+
+.stat-card-orange {
+  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+  color: white;
+}
+
+/* Loading animations */
+.loading-spinner {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(59, 130, 246, 0.2);
+  border-radius: 50%;
+  border-top-color: #3b82f6;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Animated charts */
+.chart-container {
+  position: relative;
+  height: 300px;
+  transition: all 0.3s ease;
+}
+
+.chart-container:hover {
+  transform: scale(1.02);
+}
+
+/* Data visualizations enhancements */
+.data-card {
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  background: white;
+}
+
+.data-card:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive design improvements */
+@media (max-width: 768px) {
+  .responsive-card {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .dark-mode-ready {
+    background: #1f2937;
+    color: #f9fafb;
+  }
+}
+
+/* Subtle animations for page transitions */
+.page-transition {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

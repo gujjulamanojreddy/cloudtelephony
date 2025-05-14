@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, 
-  Users, 
+  Users,
+  CreditCard,
   Package, 
   ShoppingBag, 
   BarChart2, 
@@ -145,7 +146,7 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
         {/* Sidebar header */}
         <div className="flex items-center justify-between px-4 py-4 border-b border-blue-700">
           {!collapsed && (
-            <h1 className="text-xl font-bold text-white">NeonFlake CRM</h1>
+            <h1 className="text-xl font-bold text-white">Cloud Telephony</h1>
           )}
           
           <button
@@ -199,6 +200,22 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
               to="/orders" 
               icon={<ShoppingBag />}
               label="New Orders" 
+              depth={1}
+              onClick={closeMobile}
+              collapsed={collapsed}
+            />
+            <NavItem 
+              to="/paid-orders" 
+              icon={<CreditCard />}
+              label="Paid Orders" 
+              depth={1}
+              onClick={closeMobile}
+              collapsed={collapsed}
+            />
+            <NavItem 
+              to="/unpaid-orders" 
+              icon={<ShoppingBag />}
+              label="Unpaid Orders" 
               depth={1}
               onClick={closeMobile}
               collapsed={collapsed}

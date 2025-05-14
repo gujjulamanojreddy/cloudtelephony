@@ -186,7 +186,7 @@ const PrivacyPolicyEditor: React.FC = () => {
                   height: 500,
                   menubar: false,
                   plugins: ['lists'],
-                  disabled: false,
+                  readonly: false,
                   toolbar: [
                     { name: 'styles', items: ['formatselect'] },
                     { name: 'fontfamily', items: ['fontselect'] },

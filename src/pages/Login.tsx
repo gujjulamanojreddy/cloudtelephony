@@ -55,7 +55,7 @@ const Login: React.FC = () => {
           </div>
           <h2 className="mt-6 text-center text-4xl font-black">
             <span className="bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent drop-shadow-lg">
-              Welcome to NeonFlake CRM
+              Welcome to Cloud Telephony
             </span>
           </h2>
           <p className="mt-3 text-center text-sm text-blue-200/80">
@@ -134,7 +134,7 @@ const Login: React.FC = () => {
                     </div>
                     <div className="relative flex justify-center text-sm">
                       <span className="px-4 text-blue-200/60 bg-gradient-to-b from-transparent via-black/5 to-transparent backdrop-blur-sm rounded-full">
-                        Powered by NeonFlake
+                        Powered by Cloud Telephony
                       </span>
                     </div>
                   </div>

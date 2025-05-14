@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import { Plus, Search, Edit, Trash } from 'lucide-react';
+import { useState } from 'react';
+import { Plus, Edit, Trash } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card';
 import { Table, TableHead, TableBody, TableRow, TableHeader, TableCell, TablePagination } from '../components/ui/Table';
 import Button from '../components/ui/Button';
-import Input from '../components/ui/Input';
 import Select from '../components/ui/Select';
+import SearchBar from '../components/ui/SearchBar';
 import AddProductForm from '../components/forms/AddProductForm';
 import { useToast } from '../components/ui/Toaster';
 
+// Product interface
 interface Product {
   id: string;
   name: string;
@@ -53,7 +54,7 @@ const mockProducts: Product[] = [
   }
 ];
 
-const Products: React.FC = () => {
+export default function Products() {
   const [products, setProducts] = useState<Product[]>(mockProducts);
   const [showAddForm, setShowAddForm] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -63,6 +64,7 @@ const Products: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState('all');
   const [sortBy, setSortBy] = useState<string>('dateAdded');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
   const { toast } = useToast();
 
@@ -70,11 +72,6 @@ const Products: React.FC = () => {
 
   const handleEntriesChange = (value: string) => {
     setEntriesPerPage(value);
-    setCurrentPage(1);
-  };
-
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
     setCurrentPage(1);
   };
 
@@ -89,15 +86,21 @@ const Products: React.FC = () => {
 
   const handleAddSuccess = () => {
     setShowAddForm(false);
-    toast('Product added successfully', 'success');
+    setEditingProduct(null);
+    toast('Product saved successfully', 'success');
     // Here you would typically refresh the products list
+  };
+
+  const handleEdit = (product: Product) => {
+    setEditingProduct(product);
+    setShowAddForm(true);
   };
 
   const handleDelete = async (productId: string) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       try {
         // Here you would typically call your delete API
-        setProducts(products.filter(product => product.id !== productId));
+        setProducts(products.filter(p => p.id !== productId));
         toast('Product deleted successfully', 'success');
       } catch (error) {
         toast('Failed to delete product', 'error');
@@ -123,12 +126,16 @@ const Products: React.FC = () => {
       {showAddForm ? (
         <Card>
           <CardHeader>
-            <CardTitle>Add New Product</CardTitle>
+            <CardTitle>{editingProduct ? 'Edit Product' : 'Add New Product'}</CardTitle>
           </CardHeader>
           <CardContent>
             <AddProductForm
+              product={editingProduct}
               onSuccess={handleAddSuccess}
-              onCancel={() => setShowAddForm(false)}
+              onCancel={() => {
+                setShowAddForm(false);
+                setEditingProduct(null);
+              }}
             />
           </CardContent>
         </Card>
@@ -139,7 +146,10 @@ const Products: React.FC = () => {
             <Button 
               leftIcon={<Plus size={16} />}
               variant="primary"
-              onClick={() => setShowAddForm(true)}
+              onClick={() => {
+                setEditingProduct(null); // Clear editing state when adding new
+                setShowAddForm(true);
+              }}
             >
               Add Product
             </Button>
@@ -167,13 +177,13 @@ const Products: React.FC = () => {
               </div>
 
               <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-                <Input
-                  type="search"
+                <SearchBar
                   placeholder="Search products..."
-                  value={searchTerm}
-                  onChange={handleSearch}
-                  variant="search"
-                  leftIcon={<Search className="h-4 w-4 transition-colors duration-200" />}
+                  onSearch={(value: string) => {
+                    setSearchTerm(value);
+                    setCurrentPage(1);
+                  }}
+                  initialValue={searchTerm}
                   className="w-full sm:w-80"
                 />
                 <Select
@@ -216,7 +226,6 @@ const Products: React.FC = () => {
                         )}
                       </div>
                     </TableHeader>
-                    <TableHeader>Category</TableHeader>
                     <TableHeader 
                       className="cursor-pointer"
                       onClick={() => handleSort('listPrice')}
@@ -229,17 +238,6 @@ const Products: React.FC = () => {
                       </div>
                     </TableHeader>
                     <TableHeader>Status</TableHeader>
-                    <TableHeader 
-                      className="cursor-pointer"
-                      onClick={() => handleSort('stock')}
-                    >
-                      <div className="flex items-center">
-                        Stock
-                        {sortBy === 'stock' && (
-                          <span className="ml-1">{sortOrder === 'asc' ? '↑' : '↓'}</span>
-                        )}
-                      </div>
-                    </TableHeader>
                     <TableHeader>Date Added</TableHeader>
                     <TableHeader className="text-right">Actions</TableHeader>
                   </TableRow>
@@ -249,7 +247,6 @@ const Products: React.FC = () => {
                     products.map((product) => (
                       <TableRow key={product.id}>
                         <TableCell className="font-medium">{product.name}</TableCell>
-                        <TableCell>{product.category}</TableCell>
                         <TableCell>
                           <div className="flex flex-col">
                             <span className="font-medium">₹{product.salePrice.toLocaleString()}</span>
@@ -267,13 +264,13 @@ const Products: React.FC = () => {
                             {product.status.replace('_', ' ')}
                           </span>
                         </TableCell>
-                        <TableCell>{product.stock}</TableCell>
                         <TableCell>{product.dateAdded}</TableCell>
                         <TableCell className="text-right">
                           <div className="flex justify-end items-center space-x-2">
                             <button 
                               className="p-1 text-blue-600 hover:bg-blue-50 rounded"
                               title="Edit Product"
+                              onClick={() => handleEdit(product)}
                             >
                               <Edit size={16} />
                             </button>
@@ -290,7 +287,7 @@ const Products: React.FC = () => {
                     ))
                   ) : (
                     <TableRow>
-                      <TableCell colSpan={7} className="text-center py-8 text-gray-500">
+                      <TableCell colSpan={5} className="text-center py-8 text-gray-500">
                         No products found
                       </TableCell>
                     </TableRow>
@@ -311,6 +308,5 @@ const Products: React.FC = () => {
       )}
     </div>
   );
-};
+}
 
-export default Products;

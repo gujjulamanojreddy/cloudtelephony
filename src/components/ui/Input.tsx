@@ -34,7 +34,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             id={id}
             className={cn(
-              'bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full transition duration-150 ease-in-out',
+              'bg-white border border-gray-300 text-gray-900 text-sm rounded-lg shadow-sm',
+              'focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:shadow-md',
+              'block w-full transition-all duration-200 ease-in-out',
+              'hover:border-gray-400',
               variant === 'default' && 'p-2.5',
               variant === 'search' && 'pl-10 pr-4 py-2.5 group hover:border-gray-400',
               leftIcon && variant !== 'search' && 'pl-10',

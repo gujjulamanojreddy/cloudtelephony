@@ -248,117 +248,166 @@ const AddCustomerForm: React.FC<AddCustomerFormProps> = ({ onSuccess, onCancel, 
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Input
-          label="First Name"
-          name="firstName"
-          value={formData.firstName}
-          onChange={handleChange}
-          required
-        />
-        <Input
-          label="Last Name"
-          name="lastName"
-          value={formData.lastName}
-          onChange={handleChange}
-          required
-        />
+    <form className="space-y-6 max-w-3xl mx-auto" onSubmit={handleSubmit}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="relative">
+          <Input
+            label="First Name"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            maxLength={50}
+            required
+            placeholder="Enter first name"
+          />
+          <div className="absolute right-2 bottom-2 text-xs text-gray-400">
+            {formData.firstName.length}/50
+          </div>
+        </div>
+        <div className="relative">
+          <Input
+            label="Last Name"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            maxLength={50}
+            required
+            placeholder="Enter last name"
+          />
+          <div className="absolute right-2 bottom-2 text-xs text-gray-400">
+            {formData.lastName.length}/50
+          </div>
+        </div>
       </div>
 
-      <Input
-        label="Email"
-        type="email"
-        name="email"
-        value={formData.email}
-        onChange={handleChange}
-        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
-        placeholder="example@domain.com"
-        required
-      />
-
-      <Input
-        label="Phone Number"
-        type="tel"
-        name="phone"
-        value={formData.phone}
-        onChange={handleChange}
-        pattern="[0-9]*"
-        maxLength={10}
-        placeholder="Enter 10-digit phone number"
-        required
-      />
-
-      <Input
-        label="Street Address"
-        name="streetAddress"
-        value={formData.streetAddress}
-        onChange={handleChange}
-        required
-      />
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Input
-          label="Country"
-          name="country"
-          value={formData.country}
+          label="Email"
+          type="email"
+          name="email"
+          value={formData.email}
           onChange={handleChange}
           required
+          maxLength={100}
+          placeholder="Enter email address"
         />
-        <Input
-          label="City"
-          name="city"
-          value={formData.city}
-          onChange={handleChange}
-          required
-        />
+        <div className="relative">
+          <Input
+            label="Phone Number"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            required
+            placeholder="Enter 10-digit phone number"
+          />
+          <div className="absolute right-2 bottom-2 text-xs text-gray-400">
+            {formData.phone.length}/10
+          </div>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="relative">
+        <Input
+          label="Street Address"
+          name="streetAddress"
+          value={formData.streetAddress}
+          onChange={handleChange}
+          maxLength={150}
+          required
+          placeholder="Enter street address"
+          className="w-full"
+        />
+        <div className="absolute right-2 bottom-2 text-xs text-gray-400">
+          {formData.streetAddress.length}/150
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="relative">
+          <Input
+            label="Country"
+            name="country"
+            value={formData.country}
+            onChange={handleChange}
+            maxLength={75}
+            required
+            placeholder="Enter country"
+          />
+          <div className="absolute right-2 bottom-2 text-xs text-gray-400">
+            {formData.country.length}/75
+          </div>
+        </div>
+        <div className="relative">
+          <Input
+            label="City"
+            name="city"
+            value={formData.city}
+            onChange={handleChange}
+            maxLength={100}
+            required
+            placeholder="Enter city"
+          />
+          <div className="absolute right-2 bottom-2 text-xs text-gray-400">
+            {formData.city.length}/100
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Input
           label="State"
           name="state"
           value={formData.state}
           onChange={handleChange}
+          maxLength={50}
           required
+          placeholder="Enter state"
         />
         <Input
           label="ZIP Code"
           name="zipCode"
           value={formData.zipCode}
           onChange={handleChange}
+          maxLength={6}
           required
+          placeholder="Enter ZIP code"
         />
       </div>
 
-      <Input
-        label="Company Name"
-        name="companyName"
-        value={formData.companyName}
-        onChange={handleChange}
-      />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Input
+          label="Company Name (Optional)"
+          name="companyName"
+          value={formData.companyName}
+          onChange={handleChange}
+          maxLength={50}
+          placeholder="Enter company name"
+        />
+        <Input
+          label="GST Number (Optional)"
+          name="gstNumber"
+          value={formData.gstNumber}
+          onChange={handleChange}
+          maxLength={15}
+          placeholder="Enter GST number"
+        />
+      </div>
 
-      <Input
-        label="GST Number"
-        name="gstNumber"
-        value={formData.gstNumber}
-        onChange={handleChange}
-      />
-
-      <div className="flex justify-end space-x-2">
-        <Button
-          type="button"
-          variant="secondary"
+      <div className="flex justify-end space-x-4 pt-4">
+        <Button 
+          variant="secondary" 
+          type="button" 
           onClick={onCancel}
+          className="min-w-[100px]"
         >
           Cancel
         </Button>
-        <Button
-          type="submit"
-          variant="primary"
-          isLoading={loading}
-        >
-          {editingCustomer ? 'Update Customer' : 'Add Customer'}
+        <Button 
+          variant="primary" 
+          type="submit"        isLoading={loading}
+        className="min-w-[100px]"
+      >
+        {editingCustomer ? 'Update' : 'Add'} Customer
         </Button>
       </div>
     </form>
