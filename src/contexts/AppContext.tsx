@@ -12,7 +12,7 @@ interface User {
 // Type definitions for search result items
 
 interface SearchResultItem {
-  type: 'order' | 'product' | 'customer';
+  type: 'order' | 'product';
   id: string;
   title: string;
   subtitle: string;
@@ -150,12 +150,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         category: string;
       };
 
-      type DbCustomer = {
-        id: string;
-        name: string;
-        email: string;
-        phone: string;
-      };
+
 
       // Search in orders
       const { data: orders, error: ordersError } = await supabase
@@ -183,14 +178,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         
       if (productsError) throw productsError;
       
-      // Search in customers
-      const { data: customers, error: customersError } = await supabase
-        .from('customers')
-        .select<string, DbCustomer>('id, name, email, phone')
-        .or(`name.ilike.%${query}%, email.ilike.%${query}%, phone.ilike.%${query}%`)
-        .limit(5);
-        
-      if (customersError) throw customersError;
+
       
       // Combine results and format for display
       const formattedResults: SearchResultItem[] = [
@@ -208,14 +196,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           title: product.name,
           subtitle: `₹${product.salePrice.toLocaleString()} - ${product.category}`,
           route: `/products?id=${product.id}`
-        })),
-        ...(customers || []).map(customer => ({
-          type: 'customer' as const,
-          id: customer.id,
-          title: customer.name,
-          subtitle: customer.email,
-          contact: customer.phone,
-          route: `/customers?id=${customer.id}`
         }))
       ];
       

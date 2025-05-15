@@ -71,7 +71,7 @@ interface NavGroupProps {
 }
 
 const NavGroup: React.FC<NavGroupProps> = ({ icon, label, children, collapsed = false }) => {
-  const [isOpen, setIsOpen] = useState(true); // Set to true to keep Settings open by default
+  const [isOpen, setIsOpen] = useState(false); // Initialize as closed
   
   return (
     <div>
@@ -181,13 +181,6 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
             to="/businesses" 
             icon={<Users />} 
             label="Businesses" 
-            collapsed={collapsed}
-            onClick={closeMobile}
-          />
-          <NavItem 
-            to="/customers" 
-            icon={<Users />} 
-            label="Customers" 
             collapsed={collapsed}
             onClick={closeMobile}
           />

@@ -68,7 +68,7 @@ const mockOrders = [
 ];
 
 const Orders: React.FC = () => {
-  const [orders, setOrders] = useState(mockOrders);
+  const [orders] = useState(mockOrders);
   const [currentPage, setCurrentPage] = useState(1);
   const [entriesPerPage, setEntriesPerPage] = useState('10');
   const [searchTerm, setSearchTerm] = useState('');

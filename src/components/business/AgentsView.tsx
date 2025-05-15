@@ -11,6 +11,7 @@ interface Agent {
   name: string;
   email: string;
   status: 'active' | 'inactive';
+  business_name: string;
 }
 
 interface AgentsViewProps {
@@ -48,6 +49,7 @@ export default function AgentsView({ businessId, onClose }: AgentsViewProps) {
             email: 'john.smith@example.com',
             status: 'active' as const,
             business_id: businessId,
+            business_name: 'Cloud Telephony',
             created_at: new Date().toISOString(),
           },
           {
@@ -56,6 +58,7 @@ export default function AgentsView({ businessId, onClose }: AgentsViewProps) {
             email: 'sarah.j@example.com',
             status: 'inactive' as const,
             business_id: businessId,
+            business_name: 'Cloud Telephony',
             created_at: new Date().toISOString(),
           }
         ];
@@ -72,6 +75,7 @@ export default function AgentsView({ businessId, onClose }: AgentsViewProps) {
             email: 'john.smith@example.com',
             status: 'active' as const,
             business_id: businessId,
+            business_name: 'Cloud Telephony',
             created_at: new Date().toISOString(),
           },
           {
@@ -80,6 +84,7 @@ export default function AgentsView({ businessId, onClose }: AgentsViewProps) {
             email: 'sarah.j@example.com',
             status: 'inactive' as const,
             business_id: businessId,
+            business_name: 'Cloud Telephony',
             created_at: new Date().toISOString(),
           }
         ];
@@ -121,11 +126,11 @@ export default function AgentsView({ businessId, onClose }: AgentsViewProps) {
       // Then try to insert the new agent
       const { data: newAgent, error: insertError } = await supabase
         .from('agents')
-        .insert([{
-          name: data.name,
+        .insert([{          name: data.name,
           email: data.email.toLowerCase(),
           status: 'active',
           business_id: businessId,
+          business_name: 'Cloud Telephony',
           created_at: new Date().toISOString()
         }])
         .select()
@@ -436,9 +441,9 @@ export default function AgentsView({ businessId, onClose }: AgentsViewProps) {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableHeader>S.No</TableHeader>
-                  <TableHeader>Name</TableHeader>
+                  <TableHeader>S.No</TableHeader>                  <TableHeader>Name</TableHeader>
                   <TableHeader>Mail</TableHeader>
+                  <TableHeader>Business Name</TableHeader>
                   <TableHeader>Status</TableHeader>
                   <TableHeader>Action</TableHeader>
                 </TableRow>
@@ -455,9 +460,9 @@ export default function AgentsView({ businessId, onClose }: AgentsViewProps) {
                 ) : agents.length > 0 ? (
                   agents.map((agent, index) => (
                     <TableRow key={agent.id}>
-                      <TableCell className="py-4">{index + 1}</TableCell>
-                      <TableCell className="py-4 font-medium">{agent.name}</TableCell>
+                      <TableCell className="py-4">{index + 1}</TableCell>                      <TableCell className="py-4 font-medium">{agent.name}</TableCell>
                       <TableCell className="py-4">{agent.email}</TableCell>
+                      <TableCell className="py-4">{agent.business_name}</TableCell>
                       <TableCell className="py-4">
                         <Button
                           variant="secondary"

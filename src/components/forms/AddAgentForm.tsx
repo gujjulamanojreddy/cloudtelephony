@@ -13,10 +13,10 @@ interface AddAgentFormProps {
 
 export default function AddAgentForm({ onSubmit, onCancel, initialData, isEditing = false }: AddAgentFormProps) {
   const [loading, setLoading] = useState(false);
-  const { toast } = useToast();
-  const [formData, setFormData] = useState({
+  const { toast } = useToast();  const [formData, setFormData] = useState({
     name: initialData?.name || '',
-    email: initialData?.email || ''
+    email: initialData?.email || '',
+    business_name: 'Cloud Telephony'
   });
 
   const validateForm = () => {
@@ -56,7 +56,8 @@ export default function AddAgentForm({ onSubmit, onCancel, initialData, isEditin
       if (!isEditing) {
         setFormData({
           name: '',
-          email: ''
+          email: '',
+          business_name: 'Cloud Telephony'
         });
       }
     } catch (error: any) {
@@ -90,9 +91,7 @@ export default function AddAgentForm({ onSubmit, onCancel, initialData, isEditin
               required
               maxLength={100}
               placeholder="Enter agent name"
-            />
-
-            <Input
+            />            <Input
               label="Email"
               name="email"
               type="email"
@@ -101,6 +100,14 @@ export default function AddAgentForm({ onSubmit, onCancel, initialData, isEditin
               required
               maxLength={100}
               placeholder="Enter agent email"
+            />
+
+            <Input
+              label="Business Name"
+              name="business_name"
+              value={formData.business_name}
+              disabled={true}
+              placeholder="Cloud Telephony"
             />
 
             <div className="flex justify-end gap-3 pt-4">

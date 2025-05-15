@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Sidebar from '../components/common/Sidebar';
 import Header from '../components/common/Header';
 import Dashboard from '../pages/Dashboard';
-import { Customers } from '../pages/Customers';
+
 import Products from '../pages/Products';
 import Orders from '../pages/Orders';
 import { PaidOrders } from '../pages/PaidOrders';
@@ -47,15 +47,7 @@ const AppLayout: React.FC = () => {
               </>
             } 
           />
-          <Route 
-            path="/customers" 
-            element={
-              <>
-                <Header title="Customers" subtitle="Manage your customers" />
-                <Customers />
-              </>
-            } 
-          />
+
           <Route 
             path="/products" 
             element={

@@ -134,7 +134,6 @@ const Login: React.FC = () => {
                     </div>
                     <div className="relative flex justify-center text-sm">
                       <span className="px-4 text-blue-200/60 bg-gradient-to-b from-transparent via-black/5 to-transparent backdrop-blur-sm rounded-full">
-                        Powered by Cloud Telephony
                       </span>
                     </div>
                   </div>

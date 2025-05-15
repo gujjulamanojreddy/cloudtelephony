@@ -27,7 +27,7 @@ interface Business {
 const mockBusinesses: Business[] = [
   {
     id: 'BUS001',
-    name: 'General Store',
+    name: 'Cloud Telephony',
     email: 'vijayverma25870@gmail.com',
     gstNumber: '',
     country: 'India',
