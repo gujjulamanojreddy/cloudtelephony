@@ -20,6 +20,7 @@ import PrivacyPolicyEditor from '../pages/PrivacyPolicyEditor';
 import ShippingPolicyEditor from '../pages/ShippingPolicyEditor';
 import RefundPolicyEditor from '../pages/RefundPolicyEditor';
 import AboutUsEditor from '../pages/AboutUsEditor';
+import Businesses from '../pages/Businesses';
 
 const AppLayout: React.FC = () => {
   return (
@@ -34,6 +35,15 @@ const AppLayout: React.FC = () => {
               <>
                 <Header title="Dashboard" subtitle="Overview of your business" />
                 <Dashboard />
+              </>
+            } 
+          />
+          <Route 
+            path="/businesses" 
+            element={
+              <>
+                <Header title="Businesses" subtitle="Manage your businesses" />
+                <Businesses />
               </>
             } 
           />

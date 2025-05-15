@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { memo, useRef, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
 import { Editor } from '@tinymce/tinymce-react';
@@ -40,7 +40,7 @@ We do not sell your personal information. We share information only with:
 - Opt-out of marketing communications
 - File complaints with relevant authorities`;
 
-const PrivacyPolicyEditor: React.FC = () => {
+function PrivacyPolicyEditor() {
   const navigate = useNavigate();
   const editorRef = useRef<any>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -163,22 +163,27 @@ const PrivacyPolicyEditor: React.FC = () => {
                 <label className="text-sm text-gray-600">Body</label>
               </div>
               <Editor
-                apiKey="kw7kx2lt3nplhyg9nl328rrwc1qblygubse4aqewi5q17i11"
-                onInit={(_evt, editor) => {
+                apiKey="kw7kx2lt3nplhyg9nl328rrwc1qblygubse4aqewi5q17i11"                onInit={(_evt, editor) => {
                   editorRef.current = editor;
-                  const container = editor.getContainer() as HTMLElement;
-                  container.style.border = '1px solid #e5e7eb';
-                  container.style.borderRadius = '0.375rem';
-                  
-                  const toolbar = container.querySelector('.tox-toolbar-overlord') as HTMLElement;
-                  if (toolbar) {
-                    toolbar.style.backgroundColor = '#f9fafb';
-                    toolbar.style.borderBottom = '1px solid #e5e7eb';
-                  }
+                  try {
+                    const container = editor.getContainer() as HTMLElement;
+                    if (container) {
+                      container.style.border = '1px solid #e5e7eb';
+                      container.style.borderRadius = '0.375rem';
+                      
+                      const toolbar = container.querySelector('.tox-toolbar-overlord') as HTMLElement;
+                      if (toolbar) {
+                        toolbar.style.backgroundColor = '#f9fafb';
+                        toolbar.style.borderBottom = '1px solid #e5e7eb';
+                      }
 
-                  const editor_container = container.querySelector('.tox-edit-area__iframe') as HTMLElement;
-                  if (editor_container) {
-                    editor_container.style.backgroundColor = '#ffffff';
+                      const editor_container = container.querySelector('.tox-edit-area__iframe') as HTMLElement;
+                      if (editor_container) {
+                        editor_container.style.backgroundColor = '#ffffff';
+                      }
+                    }
+                  } catch (error) {
+                    console.error('Editor initialization error:', error);
                   }
                 }}
                 initialValue={savedContent}
@@ -186,7 +191,7 @@ const PrivacyPolicyEditor: React.FC = () => {
                   height: 500,
                   menubar: false,
                   plugins: ['lists'],
-                  readonly: false,
+                  disabled: false,
                   toolbar: [
                     { name: 'styles', items: ['formatselect'] },
                     { name: 'fontfamily', items: ['fontselect'] },
@@ -231,4 +236,4 @@ const PrivacyPolicyEditor: React.FC = () => {
   );
 };
 
-export default PrivacyPolicyEditor;
+export default memo(PrivacyPolicyEditor);

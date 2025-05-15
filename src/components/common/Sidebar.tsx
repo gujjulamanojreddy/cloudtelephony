@@ -178,6 +178,13 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
             onClick={closeMobile}
           />
           <NavItem 
+            to="/businesses" 
+            icon={<Users />} 
+            label="Businesses" 
+            collapsed={collapsed}
+            onClick={closeMobile}
+          />
+          <NavItem 
             to="/customers" 
             icon={<Users />} 
             label="Customers" 
