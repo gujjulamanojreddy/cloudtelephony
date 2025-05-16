@@ -5,6 +5,7 @@ import AddAgentForm from '../forms/AddAgentForm';
 import { supabase } from '../../lib/supabase';
 import { useToast } from '../ui/Toaster';
 import Button from '../ui/Button';
+import { addAgent } from '../../lib/agents';
 
 interface Agent {
   id: string;
@@ -33,11 +34,17 @@ export default function AgentsView({ businessId, onClose }: AgentsViewProps) {
     fetchAgents();
   }, [businessId]);  const fetchAgents = async () => {
     try {
-      const { data, error } = await supabase
-        .from('agents')
-        .select('*')
-        .eq('business_id', businessId)
-        .order('created_at', { ascending: false });
+      // Try to fetch with business_id filter
+      let query = supabase.from('agents').select('*');
+      
+      // Conditionally apply business_id filter
+      try {
+        query = query.eq('business_id', businessId);
+      } catch (filterError) {
+        console.warn('Could not filter by business_id, possibly column does not exist');
+      }
+      
+      const { data, error } = await query.order('created_at', { ascending: false });
 
       if (error) {
         console.error('Error fetching agents:', error);
@@ -100,65 +107,14 @@ export default function AgentsView({ businessId, onClose }: AgentsViewProps) {
     }
   };
 
-  const handleAddAgent = async (data: { name: string; email: string }) => {
+  const handleAddAgent = async (data: { name: string; email: string; business_name: string }) => {
     try {
-      if (!businessId) {
-        throw new Error('Business ID is required');
-      }
-
-      // First check if email already exists
-      const { data: existingAgent, error: checkError } = await supabase
-        .from('agents')
-        .select('id')
-        .eq('email', data.email.toLowerCase())
-        .eq('business_id', businessId)
-        .maybeSingle();
-
-      if (checkError) {
-        console.error('Error checking existing agent:', checkError);
-        throw new Error(checkError.message);
-      }
-
-      if (existingAgent) {
-        throw new Error('An agent with this email already exists.');
-      }
-
-      // Then try to insert the new agent
-      const { data: newAgent, error: insertError } = await supabase
-        .from('agents')
-        .insert([{          name: data.name,
-          email: data.email.toLowerCase(),
-          status: 'active',
-          business_id: businessId,
-          business_name: 'Cloud Telephony',
-          created_at: new Date().toISOString()
-        }])
-        .select()
-        .single();
-
-      if (insertError) {
-        console.error('Error inserting agent:', insertError);
-        if (insertError.code === '23505') {
-          throw new Error('An agent with this email already exists.');
-        }
-        throw new Error(insertError.message);
-      }
-
-      if (!newAgent) {
-        throw new Error('Failed to create agent - no data returned.');
-      }
-
-      setAgents(prev => [newAgent, ...prev]);
-      setShowAddForm(false);
+      await addAgent(data);
       toast('Agent added successfully', 'success');
-    } catch (err) {
-      // Directly throw the error instead of wrapping it
-      console.error('Error adding agent:', err);
-      if (err instanceof Error) {
-        throw err;
-      } else {
-        throw new Error('Failed to add agent');
-      }
+      setShowAddForm(false);
+    } catch (error: any) {
+      console.error('Error adding agent:', error);
+      toast(error.message || 'Failed to add agent', 'error');
     }
   };
 
@@ -441,13 +397,15 @@ export default function AgentsView({ businessId, onClose }: AgentsViewProps) {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableHeader>S.No</TableHeader>                  <TableHeader>Name</TableHeader>
+                  <TableHeader>S.No</TableHeader>
+                  <TableHeader>Name</TableHeader>
                   <TableHeader>Mail</TableHeader>
                   <TableHeader>Business Name</TableHeader>
                   <TableHeader>Status</TableHeader>
                   <TableHeader>Action</TableHeader>
                 </TableRow>
-              </TableHead>              <TableBody>
+              </TableHead>
+              <TableBody>
                 {loading ? (
                   <TableRow>
                     <TableCell colSpan={5} className="text-center py-8">

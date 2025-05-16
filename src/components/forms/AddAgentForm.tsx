@@ -5,7 +5,7 @@ import Button from '../ui/Button';
 import Input from '../ui/Input';
 
 interface AddAgentFormProps {
-  onSubmit: (data: { name: string; email: string }) => Promise<void>;
+  onSubmit: (data: { name: string; email: string; business_name: string }) => Promise<void>;
   onCancel: () => void;
   initialData?: { name: string; email: string };
   isEditing?: boolean;
@@ -46,7 +46,8 @@ export default function AddAgentForm({ onSubmit, onCancel, initialData, isEditin
     try {
       await onSubmit({
         name: formData.name.trim(),
-        email: formData.email.trim().toLowerCase()
+        email: formData.email.trim().toLowerCase(),
+        business_name: formData.business_name
       });
       
       // If we get here, it means the submit was successful
