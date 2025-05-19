@@ -17,7 +17,10 @@ import {
   FileText,
   Share2,
   Type, // Added for Application Name icon
-  Image // Add Image icon for Logos
+  Image, // Add Image icon for Logos
+  MapPin, // For Address
+  Copyright as CopyrightIcon, // For Copyright Message
+  MessageSquare // For Contact Requests
 } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { useApp } from '../../contexts/AppContext';
@@ -185,6 +188,13 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
             onClick={closeMobile}
           />
           <NavItem 
+            to="/contact-requests" 
+            icon={<MessageSquare />} 
+            label="Contact Requests" 
+            collapsed={collapsed}
+            onClick={closeMobile}
+          />
+          <NavItem 
             to="/products" 
             icon={<Package />} 
             label="Products" 
@@ -258,9 +268,25 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
               onClick={closeMobile}
             />
             <NavItem
+              to="/settings/address"
+              icon={<MapPin />}
+              label="Address"
+              depth={1}
+              collapsed={collapsed}
+              onClick={closeMobile}
+            />
+            <NavItem
               to="/settings/logos"
               icon={<Image />}
               label="Logos"
+              depth={1}
+              collapsed={collapsed}
+              onClick={closeMobile}
+            />
+            <NavItem
+              to="/settings/copyright-message"
+              icon={<CopyrightIcon />}
+              label="Copyright Message"
               depth={1}
               collapsed={collapsed}
               onClick={closeMobile}

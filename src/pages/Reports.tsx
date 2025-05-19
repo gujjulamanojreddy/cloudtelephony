@@ -1,10 +1,32 @@
 import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card';
-import { BarChart2, TrendingUp, Download } from 'lucide-react';
+import { BarChart2, Download } from 'lucide-react';
 import { Table, TableHead, TableBody, TableRow, TableHeader, TableCell } from '../components/ui/Table';
 import Button from '../components/ui/Button';
 import { exportToExcel } from '../utils/exportToExcel';
 import { useToast } from '../components/ui/Toaster';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+
+// Register Chart.js components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 // Mock data for top cities
 const topCities = [
@@ -38,9 +60,94 @@ const leastProducts = [
   { name: 'Mouse Pad', orders: 2, revenue: 998 },
 ];
 
+// Mock data for sales trend
+const salesTrendData = {
+  today: {
+    labels: ['12AM', '4AM', '8AM', '12PM', '4PM', '8PM', '11:59PM'],
+    sales: [12000, 19000, 32000, 50000, 73000, 98000, 127000],
+    orders: [5, 8, 15, 25, 35, 45, 52]
+  },
+  yesterday: {
+    labels: ['12AM', '4AM', '8AM', '12PM', '4PM', '8PM', '11:59PM'],
+    sales: [15000, 25000, 38000, 55000, 78000, 102000, 132000],
+    orders: [7, 12, 18, 28, 38, 48, 55]
+  },
+  thisWeek: {
+    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    sales: [150000, 180000, 160000, 185000, 190000, 170000, 160000],
+    orders: [70, 85, 75, 88, 92, 82, 77]
+  },
+  thisMonth: {
+    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+    sales: [720000, 680000, 740000, 690000],
+    orders: [320, 290, 310, 285]
+  }
+};
+
 const Reports: React.FC = () => {
   const [timeRange, setTimeRange] = useState('today');
   const { toast } = useToast();
+  
+  // Chart options
+  const chartOptions = {
+    responsive: true,
+    interaction: {
+      mode: 'index' as const,
+      intersect: false,
+    },
+    plugins: {
+      legend: {
+        position: 'top' as const,
+      },
+      title: {
+        display: false
+      },
+    },
+    scales: {
+      y: {
+        type: 'linear' as const,
+        display: true,
+        position: 'left' as const,
+        title: {
+          display: true,
+          text: 'Revenue (₹)'
+        }
+      },
+      y1: {
+        type: 'linear' as const,
+        display: true,
+        position: 'right' as const,
+        grid: {
+          drawOnChartArea: false,
+        },
+        title: {
+          display: true,
+          text: 'Orders'
+        }
+      }
+    }
+  };
+
+  // Chart data
+  const chartData = {
+    labels: salesTrendData[timeRange as keyof typeof salesTrendData].labels,
+    datasets: [
+      {
+        label: 'Revenue',
+        data: salesTrendData[timeRange as keyof typeof salesTrendData].sales,
+        borderColor: 'rgb(99, 102, 241)',
+        backgroundColor: 'rgba(99, 102, 241, 0.5)',
+        yAxisID: 'y',
+      },
+      {
+        label: 'Orders',
+        data: salesTrendData[timeRange as keyof typeof salesTrendData].orders,
+        borderColor: 'rgb(14, 165, 233)',
+        backgroundColor: 'rgba(14, 165, 233, 0.5)',
+        yAxisID: 'y1',
+      }
+    ]
+  };
   
   // Mock data for stats
   const stats = {
@@ -166,11 +273,8 @@ const Reports: React.FC = () => {
             <CardTitle className="text-lg font-medium">Sales & Revenue Trends</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-80 flex items-center justify-center text-gray-400 border-t border-gray-200 mt-4 pt-4">
-              <div className="flex flex-col items-center">
-                <TrendingUp size={48} strokeWidth={1} />
-                <p className="mt-2">Sales chart visualization would appear here</p>
-              </div>
+            <div className="h-[400px] mt-4">
+              <Line options={chartOptions} data={chartData} />
             </div>
           </CardContent>
         </Card>

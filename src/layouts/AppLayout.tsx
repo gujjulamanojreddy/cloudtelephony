@@ -13,6 +13,7 @@ import Settings from '../pages/Settings';
 import SocialMedia from '../pages/SocialMedia';
 import ApplicationName from '../pages/ApplicationName';
 import Logos from '../pages/Logos';
+import NewContactRequest from '../pages/NewContactRequest';
 import NotFound from '../pages/NotFound';
 import Profile from '../pages/Profile';
 import TermsEditor from '../pages/TermsEditor';
@@ -20,7 +21,10 @@ import PrivacyPolicyEditor from '../pages/PrivacyPolicyEditor';
 import ShippingPolicyEditor from '../pages/ShippingPolicyEditor';
 import RefundPolicyEditor from '../pages/RefundPolicyEditor';
 import AboutUsEditor from '../pages/AboutUsEditor';
+import Address from '../pages/Address';
+import CopyrightMessage from '../pages/CopyrightMessage';
 import Businesses from '../pages/Businesses';
+import ContactRequests from '../pages/ContactRequests';
 
 const AppLayout: React.FC = () => {
   return (
@@ -44,6 +48,24 @@ const AppLayout: React.FC = () => {
               <>
                 <Header title="Businesses" subtitle="Manage your businesses" />
                 <Businesses />
+              </>
+            } 
+          />
+          <Route 
+            path="/contact-requests" 
+            element={
+              <>
+                <Header title="Contact Requests" subtitle="Manage your contact requests" />
+                <ContactRequests />
+              </>
+            } 
+          />
+          <Route 
+            path="/contact-requests/new" 
+            element={
+              <>
+                <Header title="New Contact Request" subtitle="Create a new contact request" />
+                <NewContactRequest />
               </>
             } 
           />
@@ -121,11 +143,29 @@ const AppLayout: React.FC = () => {
             } 
           />
           <Route 
+            path="/settings/address" 
+            element={
+              <>
+                <Header title="Address Settings" subtitle="Manage your business address" />
+                <Address />
+              </>
+            } 
+          />
+          <Route 
             path="/settings/logos" 
             element={
               <>
                 <Header title="Logo Settings" subtitle="Manage your website logos" />
                 <Logos />
+              </>
+            } 
+          />
+          <Route 
+            path="/settings/copyright-message" 
+            element={
+              <>
+                <Header title="Copyright Message" subtitle="Manage your website copyright message" />
+                <CopyrightMessage />
               </>
             } 
           />
