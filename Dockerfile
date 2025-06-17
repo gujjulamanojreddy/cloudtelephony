@@ -10,14 +10,14 @@ COPY package.json package-lock.json ./
 # Install dependencies
 RUN npm install
 
-# Copy the entire project
+# Copy full project
 COPY . .
 
-# Set environment variable to ensure Vite listens on all interfaces
+# Set Vite host to expose server to the network
 ENV VITE_HOST=0.0.0.0
 
 # Expose Vite's default dev server port
 EXPOSE 5173
 
-# Start the Vite dev server and bind it to all network interfaces
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+# Run the Vite development server
+CMD [ "sh", "-c", "npm run dev -- --host 0.0.0.0" ]
