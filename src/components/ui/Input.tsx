@@ -15,9 +15,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const id = props.id || `input-${Math.random().toString(36).substring(2, 11)}`;
     
     return (
-      <div className={cn(fullWidth && 'w-full')}>
-        {label && (
-          <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">
+      <div className={cn(fullWidth && 'w-full')}>        {label && (
+          <label htmlFor={id} className="block text-sm font-medium text-white mb-2">
             {label}
           </label>
         )}
@@ -29,8 +28,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             )}>
               {leftIcon}
             </div>
-          )}
-          <input
+          )}          <input
             ref={ref}
             id={id}
             className={cn(

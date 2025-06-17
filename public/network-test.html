@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Network Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        .success { background-color: #d4edda; }
+        .error { background-color: #f8d7da; }
+        button { padding: 10px 20px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Network Connectivity Test</h1>
+    <button onclick="runTests()">Run Tests</button>
+    <div id="results"></div>
+
+    <script>
+        async function testConnection(url, description) {
+            try {
+                const response = await fetch(url, { 
+                    method: 'HEAD', 
+                    mode: 'cors',
+                    cache: 'no-cache'
+                });
+                return {
+                    success: response.ok,
+                    status: response.status,
+                    description
+                };
+            } catch (error) {
+                return {
+                    success: false,
+                    error: error.message,
+                    description
+                };
+            }
+        }
+
+        async function runTests() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<p>Running tests...</p>';
+
+            const tests = [
+                { url: 'https://www.google.com', desc: 'Internet Connection (Google)' },
+                { url: 'https://gtydunuwdpfrxwyvwsjw.supabase.co', desc: 'Supabase Server' },
+                { url: 'https://gtydunuwdpfrxwyvwsjw.supabase.co/rest/v1/', desc: 'Supabase REST API' },
+                { url: 'https://8.8.8.8', desc: 'DNS Server (8.8.8.8)' }
+            ];
+
+            let html = '';
+            for (const test of tests) {
+                const result = await testConnection(test.url, test.desc);
+                const className = result.success ? 'success' : 'error';
+                html += `<div class="test ${className}">
+                    <strong>${result.description}</strong><br>
+                    Status: ${result.success ? 'SUCCESS' : 'FAILED'}<br>
+                    ${result.status ? `HTTP Status: ${result.status}` : ''}
+                    ${result.error ? `Error: ${result.error}` : ''}
+                </div>`;
+            }
+
+            html += `<div class="test">
+                <strong>Network Info:</strong><br>
+                Online: ${navigator.onLine}<br>
+                User Agent: ${navigator.userAgent}<br>
+                Current URL: ${window.location.href}
+            </div>`;
+
+            resultsDiv.innerHTML = html;
+        }
+
+        // Auto-run tests on load
+        window.onload = () => {
+            setTimeout(runTests, 1000);
+        };
+    </script>
+</body>
+</html>

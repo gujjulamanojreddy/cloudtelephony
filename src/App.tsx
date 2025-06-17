@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AppProvider, useApp } from './contexts/AppContext';
+import { ConnectionStatus } from './components/common/ConnectionStatus';
 import AppLayout from './layouts/AppLayout';
 import Login from './pages/Login';
 
@@ -28,7 +29,15 @@ const router = createBrowserRouter([
     element: <Login />
   },
   {
-    path: '/*',
+    path: '/',
+    element: (
+      <ProtectedRoute>
+        <AppLayout />
+      </ProtectedRoute>
+    )
+  },
+  {
+    path: '*',
     element: (
       <ProtectedRoute>
         <AppLayout />
@@ -40,6 +49,7 @@ const router = createBrowserRouter([
 function App() {
   return (
     <AppProvider>
+      <ConnectionStatus />
       <RouterProvider router={router} />
       <Toaster 
         position="top-right"

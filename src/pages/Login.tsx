@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Store, Mail, Lock, ArrowRight } from 'lucide-react';
 import { useApp } from '../contexts/AppContext';
+import { DemoCredentials } from '../components/common/DemoCredentials';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
 import toast from 'react-hot-toast';
@@ -10,8 +11,22 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState('admin@example.com');
   const [password, setPassword] = useState('admin123');
   const [loading, setLoading] = useState(false);
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
   const { login } = useApp();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,11 +43,10 @@ const Login: React.FC = () => {
       setLoading(false);
     }
   };
-
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden bg-gradient-to-tr from-blue-950 via-blue-900 to-blue-950">
+    <div className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden bg-gradient-to-tr from-blue-950 via-blue-900 to-blue-950 p-4">
       {/* Animated background elements */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:20px_20px]" />
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-[800px] h-[800px] bg-blue-500 rounded-full opacity-20 blur-3xl animate-blob" />
@@ -40,10 +54,8 @@ const Login: React.FC = () => {
           <div className="w-[500px] h-[500px] bg-blue-600 rounded-full opacity-20 blur-3xl animate-blob animation-delay-4000 absolute" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-800/10 to-blue-950" />
-      </div>
-
-      {/* Content */}
-      <div className="relative w-full py-12 sm:px-6 lg:px-8">
+      </div>      {/* Content */}
+      <div className="relative w-full max-w-md mx-auto py-12 z-10">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <div className="flex justify-center mb-8 scale-110">
             <div className="relative group">
@@ -72,8 +84,7 @@ const Login: React.FC = () => {
               
               <div className="relative">
                 <form className="space-y-6" onSubmit={handleSubmit}>
-                  <div className="space-y-5">
-                    <Input
+                  <div className="space-y-5">                    <Input
                       label="Email address"
                       type="email"
                       value={email}
@@ -86,10 +97,8 @@ const Login: React.FC = () => {
                           className="text-blue-300 group-hover:text-blue-200 transition-colors duration-200" 
                         />
                       }
-                      className="bg-white/10 border-white/20 text-white placeholder:text-blue-200/50 focus:border-blue-400"
-                    />
-
-                    <Input
+                      className="bg-white/10 border-white/20 text-white placeholder:text-blue-200/50 focus:border-blue-400 focus:ring-blue-400/50"
+                    />                    <Input
                       label="Password"
                       type="password"
                       value={password}
@@ -102,7 +111,7 @@ const Login: React.FC = () => {
                           className="text-blue-300 group-hover:text-blue-200 transition-colors duration-200" 
                         />
                       }
-                      className="bg-white/10 border-white/20 text-white placeholder:text-blue-200/50 focus:border-blue-400"
+                      className="bg-white/10 border-white/20 text-white placeholder:text-blue-200/50 focus:border-blue-400 focus:ring-blue-400/50"
                     />
                   </div>
 
@@ -141,6 +150,20 @@ const Login: React.FC = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Demo credentials section */}
+        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md text-center">
+          <DemoCredentials isOnline={isOnline} />
+        </div>
+
+        {/* Network status indicator */}
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-sm">
+          {isOnline ? (
+            <span className="text-green-400">Online</span>
+          ) : (
+            <span className="text-red-400">Offline</span>
+          )}
         </div>
       </div>
     </div>
