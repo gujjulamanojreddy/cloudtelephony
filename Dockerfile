@@ -4,20 +4,17 @@ FROM node:20
 # Set working directory
 WORKDIR /app
 
-# Copy dependency definitions
+# Copy package.json and lock file
 COPY package.json package-lock.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy full project
+# Copy rest of the app
 COPY . .
 
-# Set Vite host to expose server to the network
-ENV VITE_HOST=0.0.0.0
-
-# Expose Vite's default dev server port
+# Expose the Vite dev server port
 EXPOSE 5173
 
-# Run the Vite development server
-CMD [ "sh", "-c", "npm run dev -- --host 0.0.0.0" ]
+# Start the Vite dev server with --host to allow external access
+CMD ["npm", "run", "dev", "--", "--host"]
